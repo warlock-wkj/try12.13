@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>冒泡排序</title>
+	<script>
+	/*
+	原理：
+	1.比较相邻的元素，如果第一个比第二个大，就交换它们两个；
+	2.对每一对相邻的元素做同样的工作，从开始第一对到结尾最后一对，这样在最后的元素应该会是最大的数；
+	3.针对所有的元素重复以后以上的步骤，除了最后一个
+	4.重复步骤1-3,直到排序完成
+	*/
+	var arr=[3,1,5,4,2,9,8,6];
+	function bubbleSort(arr){
+		var len=arr.length;
+		for(var i=0;i<len;i++){
+			for(var j=0;j<len-1-i;j++){
+				if(arr[j]>arr[j+1]){//相邻两个元素进行比较
+					var temp=arr[j+1];//前后交换位置，大的到后面
+					arr[j+1]=arr[j];
+					arr[j]=temp;
+				}
+			}
+		}
+		return arr;
+	}
+	console.log(bubbleSort(arr));
+
+	/*
+	改进一：
+	设置一标志性变量pos，用于记录每趟排序中最后一次进行交换的位。由于pos位置之后的记录均已交换到位，故在进行下一趟排序时只要扫描到pos位置即可。
+	*/
+	function bubbleSort2(arr){
+		var i=arr.length-1;//初始时，最后位置保持不变
+		while(i>0){
+			var pos=0;//每趟开始时无记录交换
+			for(var j=0;j<i;j++){
+				if(arr[j]>arr[j+1]){
+					pos=j;//记录交换的位置
+					var temp=arr[j+1];
+					arr[j+1]=arr[j];
+					arr[j]=temp;
+				}
+			}
+			i=pos;//为下一趟排序做准备
+		}
+		return arr;
+	}
+	console.log(bubbleSort2(arr));
+
+	/*
+	改进二：
+	传统冒泡排序每一趟排序操作只能找到一个最大值或最小值，我们考虑利用在每趟排序中进行正向和反向两遍冒泡的方法，一次可以得到两个最终值（最大值和最小值），从而使排序趟数几乎减少一半。
+	*/
+	function bubbleSort3(arr){
+		var low=0;
+		var high=arr.length-1;//设置变量的初始值
+		var tmp,j;
+		while(low<high){
+			for(j=low;j<high;++j)//正向冒泡找到最大值
+				if(arr[j]>arr[j+1]){
+					tmp=arr[j];
+					arr[j]=arr[j+1];
+					arr[j+1]=tmp;
+				}
+			--high;//修改high值，前移一位
+			for(j=high;j>low;--j)//反向冒泡找到最小者
+				if(arr[j]<arr[j-1]){
+					tmp=arr[j];
+					arr[j]=arr[j-1];
+					arr[j-1]=tmp;
+				}
+			++low;
+		}
+		return arr; 
+	}
+	console.log(bubbleSort3(arr))
+	</script>
+</head>
+<body>
+	<h3>冒泡排序动图演示</h3>
+	<img src="http://img.mp.sohu.com/upload/20170715/d168bda67cf24adcad9baf7d7159a669_th.png">
+</body>
+</html>

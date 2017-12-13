@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+<body>
+	
+</body>
+</html>
+<script type="text/javascript">
+	var left;
+	document.addEventListener('touchstart',function (evt) {
+		var touch = evt.touches[0]
+		// 记录x坐标
+		var x = touch.clientX;
+		document.addEventListener('touchmove',function (evt) {
+			var touch = evt.touches[0]
+			left = touch.clientX - x;
+		},false);
+		document.addEventListener('touchend',function (evt) {
+			if (left > 0) {
+				console.log('右滑')
+			} else {
+				console.log('左滑')
+			}
+		},false);
+	},false);
+</script>

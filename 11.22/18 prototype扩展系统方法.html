@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	
+</body>
+</html>
+<script type="text/javascript">
+	var str = '  hello   ';
+	var str1 = '   kkj   ';
+
+	// function trim (s) {
+	// 	return s.replace(/^\s+|\s+$/g,'');
+	// }
+
+	String.prototype.trim = String.prototype.trim || function () {
+		// this
+		return this.replace(/^\s+|\s+$/g,'');
+	}
+
+	console.log('++'+str.trim())
+
+</script>

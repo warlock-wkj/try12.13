@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>去掉整型数组中重复的值</title>
+	<script>
+	let arr=[1,2,3,5,3,1,4,2,5];
+	//方法一：indexOf数组去重
+	var arr1=[];
+	for(var i=0;i<arr.length;i++){
+		if(arr1.indexOf(arr[i])==-1){
+			arr1.push(arr[i])
+		}
+	}
+	console.log(arr1)
+	
+
+	//方法二：直接使用es6的set
+	let unique=function(array){
+		return [...new Set(array)];
+	}
+	console.log(unique(arr))
+
+
+	//方法三：使用Object，已知Object对象的键是唯一的，可以利用这个特性为数组去重
+	let unique1=function(array){
+		let ro={};
+		let ra=[];
+		array.forEach(item=>{
+			if(!ro[item]){
+				ro[item]=item;
+				ra.push(item);
+			}
+		})
+		return ra;
+	}
+	console.log(unique1(arr))
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

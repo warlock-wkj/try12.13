@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+		div {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	</style>
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="angular.js"></script>
+	<script type="text/javascript">
+	var app = angular.module('app',[]);
+
+	app.directive('esDrag',function () {
+		return {
+			link: function (scope,ele,attr) {
+				ele.on('mousedown',function (evt) {
+					var x = evt.clientX - ele.offset().left;
+					var y = evt.clientY - ele.offset().top;
+					$(document).on('mousemove',function (evt) {
+						var left = evt.clientX - x;
+						var top = evt.clientY - y;
+						ele.css({left,top});
+					});
+					$(document).on('mouseup',function () {
+						$(document).off();
+					})
+				})
+			}
+		}
+	});
+	</script>
+</head>
+<body>
+	<div es-drag></div>
+</body>
+</html>

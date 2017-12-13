@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	
+</body>
+</html>
+<script type="text/javascript">
+	var data = [];
+	var y1;
+	var y;
+	document.addEventListener('touchstart',function (evt) {
+		y = evt.touches[0].clientY;
+		return false;
+	},false);
+	document.addEventListener('touchmove',function (evt) {
+		y1 = evt.touches[0].clientY;
+	});
+	document.addEventListener('touchend',function () {
+		var t = y1 - y;
+		if (t > 0) {
+			console.log('下滑');
+		}else {
+			// 加载数据
+			for (var i = 0;i < 10;i++) {
+				data.push(i);
+			}
+			console.log(data);
+		}
+	});
+</script>

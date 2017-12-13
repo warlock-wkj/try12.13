@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>判断一个字符串是否回文</title>
+	<script>
+	let str1="abcdcba";
+	//方法一：利用JS数组实现
+	let arr=str1.split('');//切割成数组
+	arr.reverse();//反转数组
+	let str2=arr.join('');//拼接成字符串
+	console.log(str1==str2)//true
+	
+
+	//方法二：利用数组的reduceRight()方法
+	let rs=Array.prototype.reduceRight.apply(str1,[function(pre,current){
+		return pre+current;
+	},''])
+
+	console.log(rs)
+
+	let checkPalindrom = function(str1){
+		return console.log(str1==rs);
+	}
+	checkPalindrom(str1)
+
+	//方法三：使用栈数据结构，先将字符串中字符依次入栈，然后出栈组成新的字符串，即为逆转的字符串，然后做比较
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

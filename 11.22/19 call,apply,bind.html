@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<button>点击</button>
+</body>
+</html>
+<script type="text/javascript">
+	function show (b,c) {
+		console.log(this,b,c)
+	}
+	// var a = {b:1,c:2};
+	// call
+	// show.call(a,1,2);
+
+	// show.apply(a,[1,2]);
+
+	// var s = show.bind(a,1,2);
+	// s()
+
+	var oBtn = document.getElementsByTagName('button')[0];
+	oBtn.onclick = function () {
+		// var _this = this;
+		setTimeout(function () {
+			alert(this.innerHTML)
+		}.bind(this),2000);
+	}
+</script>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="vue.js"></script>
+		<script>
+			window.onload=function(){
+				var vm=new Vue({
+					el:'#aaa',
+					data:{
+						msg:'hello'
+					},
+					methods:{
+						dianji(){
+							console.log(this.$els)//undefined vue2.0已经弃用
+							console.log(this.$refs.p.textContent)//aaaa
+						}
+					}
+				})
+			}
+			
+		</script>
+	</head>
+	<body>
+		<p id="aaa" ref="p" el="p" @click="dianji">aaaa</p>
+	</body>
+</html>

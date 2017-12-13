@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		li {
+			margin: 20px;
+		}
+	</style>
+	<script type="text/javascript" src="artTemplate-master/dist/template-native.js"></script>
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+	<script type="text/html" id="aaa">
+		<% for (var i = 0;i < list.length;i++) { %>
+			<li>
+				<h2>标题:<%=list[i].title %></h2>
+				<p>演员:<%=list[i].actor %></p>
+				<div>类型:<%=list[i].type %></div>
+			</li>
+		<%}%>
+
+		<% if(!list.length) {%>
+			<h1>当前没有数据</h1>
+		<%} %>
+	</script>
+	
+	<script type="text/javascript">	
+		$(function () {
+
+			var data = {list: [{title: '羞羞的铁拳1',actor: '玛丽',type: '喜剧'},{title: '羞羞的铁拳2',actor: '玛丽',type: '喜剧'},{title: '羞羞的铁拳3',actor: '玛丽',type: '喜剧'},{title: '羞羞的铁拳4',actor: '玛丽',type: '喜剧'},{title: '羞羞的铁拳5',actor: '玛丽',type: '喜剧'}],s: false};
+			var x = template('aaa',data);
+			console.log(x);
+			$('ul').html(x);
+		})
+	</script>
+
+</head>
+<body>
+	<ul>
+		
+	</ul>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery中的hasClass</title>
+	<script src="jquery.js"></script>
+	<script>
+		// $(function(){
+		// 	// console.log($('div').hasClass('aaa'))//true
+		// })
+		window.onload=function(){
+			var Div=document.getElementsByTagName('div')[0];
+			console.log(hasClass(Div,'aaa'))
+			
+
+
+			function hasClass(dom,str){
+				var cla=dom.attributes['class'].value;
+				var arr=cla.split(' ');
+				for(var i=0;i<arr.length;i++){
+					if(arr[i]==str){
+						return true;
+					}else{
+						return false;
+					}
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="aaa bbb"></div>
+</body>
+</html>

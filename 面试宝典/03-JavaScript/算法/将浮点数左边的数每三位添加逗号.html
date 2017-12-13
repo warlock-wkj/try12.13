@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>将浮点数左边的数每三位添加逗号</title>
+	<script>
+	var num=1200000.11;
+	var result = num && num.toString().replace(/(\d)(?=(\d{3})+\.)/g,function($1,$2){
+ 		return $2 + ',';
+	})
+	console.log(result)
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

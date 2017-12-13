@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script type="text/javascript" src="angular.js"></script>
+	<script type="text/javascript">
+	var app = angular.module('app',[]);
+
+	app.controller('f',function ($scope) {
+		$scope.x = 'aaa';
+		setTimeout(function () {
+			$scope.$apply(function () {
+				$scope.x = 'bbb';
+			});
+
+		},2000)
+	});
+
+	app.filter('huobin',function () {
+		return function (input,a) {
+			console.log(a);
+			a = a || '$'; 
+			return a+input;
+		}
+	});
+	</script>
+</head>
+<body ng-controller="f">
+	<!-- {{110 | currency:'i'}} -->
+	{{110 | huobin:'sss'}}
+	{{x}}
+</body>
+</html>

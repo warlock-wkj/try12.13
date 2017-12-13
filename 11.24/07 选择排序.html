@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script type="text/javascript">
+		// [50,100,110,200,500]  
+		// 找当前下标以后的最小值的下标
+		function findMinIndex(arr,index) {
+			// 最小值下标
+			var minIndex = index;
+			// 最小值
+			var minValue = arr[minIndex];
+			for (var i = minIndex+1;i < arr.length;i++) {
+				if (arr[i] < minValue) {
+					minIndex = i;
+					minValue = arr[i];
+				}
+			}
+			return minIndex;
+		}
+		function selectSort (arr) {
+			for (var i = 0;i < arr.length;i++) {
+				var index = findMinIndex(arr,i);
+				
+				var temp = arr[index];
+				arr[index] = arr[i];
+				arr[i] = temp;
+
+			}
+			return arr;
+		}
+
+		var arr = [200,100,50,110,500,0,50	];
+		alert(selectSort(arr));
+
+
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

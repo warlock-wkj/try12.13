@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style type="text/css">
+		div {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+		div:active {
+			background: #ccc;
+		}
+	</style>
+	<script type="text/javascript" src="zepto/dist/zepto.js"></script>
+	<script type="text/javascript" src="zepto/src/touch.js"></script>
+</head>
+<body>
+	<div></div>
+</body>
+</html>
+<script type="text/javascript">
+	// $('div').on('tap',function () {
+	// 	alert(1);
+	// })
+	$('div').on('longTap',function () {
+		alert(2)
+	});
+</script>

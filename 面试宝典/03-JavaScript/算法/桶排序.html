@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>桶排序</title>
+	<script>
+	/*
+	原理：假设输入数据服从均匀分布，将数据分到有限数量的桶里，每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排）
+	步骤：
+	1.设置一个定量的数组当作空桶；
+	2.遍历输入数据，并且把数据一个一个放到对应的桶里去；
+	3.对每个不是空的桶进行排序；
+	4.从不是空的桶里把排好序的数据拼接起来。
+	*/
+	/*
+	桶排序
+	array 数组
+	num 桶的数量
+	*/
+	function bucketSort(array,num){
+		if(array.length<=1){
+			return array;
+		}
+		var len=array.length,buckets=[],result=[],min=max=array[0],regex='/^[1-9]+[0-9]*$',space,n=0;
+		num=num||((num>1&&regex.test(num))?num:10);
+		for(var i=1;i<len;i++){
+			min=min<=array[i]?min:array[i];
+			max=max>=array[i]?max:array[i];
+		}
+		space=(max-min+1)/num;
+		for(var j=0;j<len;j++){
+			var index=Math.floor((array[j]-min)/space);
+			if(buckets[index]){
+				var k=buckets[index].length-1;
+				while(k>=0&&buckets[index][k]>array[j]){
+					buckets[index][k+1]=buckets[index][k];
+					k--;
+				}
+				buckets[index][k+1]=array[j];
+			}else{
+				buckets[index]=[];
+				buckets[index].push(array[j]);
+			}
+		}
+		while(n<num){
+			result=result.concat(buckets[n]);
+			n++;
+		}
+		return result;
+	}
+	var arr=[3,1,5,4,2,9,8,6];
+	console.log(bucketSort(arr,4))
+	</script>
+</head>
+<body>
+	<h3>桶排序图示</h3>
+	<img src="http://img.mp.sohu.com/upload/20170715/50794a2a377544c2866ec299c7ef6aa3_th.png">
+</body>
+</html>

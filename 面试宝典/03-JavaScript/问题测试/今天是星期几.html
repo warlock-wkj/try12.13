@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>返回今天是星期几</title>
+	<script>
+	//实现一个函数，返回今天星期几（例如今天周一，返回字符串“今天是星期一”）
+	function getWeek(){
+		var weekDay=new Date().getDay()
+		switch(weekDay){
+			case 0:
+			 console.log('今天是星期日')
+			break;
+			case 1:
+			 console.log('今天是星期一')
+			 break
+			case 2:
+			 console.log('今天是星期二')
+			 break
+			case 3:
+			 console.log('今天是星期三')
+			 break
+			case 4:
+			 console.log('今天是星期四')
+			 break
+			case 5:
+			 console.log('今天是星期五')
+			 break
+			case 6:
+			 console.log('今天是星期六')
+			 break
+		}
+	}
+	getWeek()
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

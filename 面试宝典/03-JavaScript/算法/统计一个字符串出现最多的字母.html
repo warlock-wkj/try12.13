@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>统计一个字符串出现最多的字母</title>
+	<script>
+	let str="asdjkerghasdfasdczjadfadsdaaaaafsdfjaadgajhasd";
+	//方法一：笨方法，使用循环去统计个数
+	let countChar = function countChar(str){
+		let ro = {};
+		for(let c of str){
+			if(!ro[c]){
+				ro[c]=1;
+			}else{
+				ro[c]++;
+			}
+		}
+		return ro
+	}
+	console.log(countChar(str))
+	//方法二：使用数组的reduce()方法进行统计，这个方法就适合进行统计计算
+	let countChar1=function countChar1(str){
+		return Array.prototype.reduce.call(str,function(pre,current){
+			if(pre[current]){
+				pre[current]++;
+			}else{
+				pre[current]=1;
+			}
+			return pre;
+		},{});
+	}
+	console.log(countChar1(str))
+
+
+
+	//然后，从刚才统计出的数中查找出出现最多的字符
+	let findMaxDuplicateChar=function(str){
+		let chars=countChar(str);
+		let max=0;
+		let char=null;
+		for(let c in chars){
+			if(chars[c]>max){
+				max=chars[c];
+				char=c;
+			}
+		}
+		return char;
+	}
+	console.log(findMaxDuplicateChar(str))
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

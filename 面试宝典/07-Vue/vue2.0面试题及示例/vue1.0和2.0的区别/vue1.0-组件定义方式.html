@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <script src="vue1.0.js"></script>
+    <script>
+		var Aaa=Vue.extend({
+			data(){
+				return {
+					msg:"我是标题3"
+				}
+			},
+			methods:{
+				change(){
+					this.msg="changed"
+				}
+			},
+			template:"<h3>{{msg}}</h3>"
+			
+		})
+		Vue.component('aaa',Aaa);
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    msg:'welcome vue2.0'
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+    <div id="box">
+        <aaa></aaa>
+        {{msg}}
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	
+</body>
+</html>
+<script type="text/javascript">
+	// 浅复制
+	// var json1 = {a:1,b:2};
+	// var json2 = json1;
+	// json2.a = 3;
+	// console.log(json1);
+
+	// 深复制
+	var json1 = {a:1,b:2};
+	var json2 = {};
+
+	for (var key  in  json1) {
+		json2[key] = json1[key];
+	}
+	json2.a = 3;
+	console.log(json2,json1)
+</script>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue兄弟组件间通信</title>
+</head>
+<body>
+<div id="app4">
+    <display></display>
+    <increment></increment>
+</div>
+<script>
+    var bus = new Vue();
+    Vue.component('increment', {
+        template: `<button @click="add">+</button>`,
+        data: function () {
+            return {count: 0}
+        },
+        methods: {
+            add: function () {
+                bus.$emit('inc', this.count+=1)
+            }
+        }
+    });
+    Vue.component('display', {
+        template: `<span>Clicked: <mark>{{c}}</mark> times</span>`,
+        data: function () {
+            return {c: 0}
+        },
+        created: function () {
+            var self=this;
+//            bus.$on('inc', function (num) {
+//                self.c = num
+//            });
+            bus.$on('inc',  (num) =>
+                this.c = num
+            );
+        }
+    });
+    vm = new Vue({
+        el: "#app4",
+    })
+</script>
+</body>
+</html>
+
+

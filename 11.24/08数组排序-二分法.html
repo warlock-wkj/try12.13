@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+
+    </style>
+    <script>
+        var arr=[23,10,90,-100,900];
+
+        function mySort(arr,s,e){
+            if(s>e){
+                return [];
+            }else if(s==e){
+                return [arr[e]];
+            }
+            var c=Math.floor((s+e)/2);
+            var left=mySort(arr,s,c);
+            var right=mySort(arr,c+1,e);
+            var result=[];
+            while(left.length>0 || right.length>0){
+                if(left[0]<right[0]){
+                    result.push(left.shift());
+                }else{
+                    result.push(right.shift());
+                }
+
+                if(left.length==0){
+                    result=result.concat(right);
+                    break;// 跳出循环
+                }else if(right.length==0){
+                    result=result.concat(left);
+                    break;
+                }
+            }
+            return result;
+        }
+
+        document.write(mySort(arr,0,arr.length-1));
+    </script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>两个数的和等于给定值</title>
+	<script>
+	var arr=[1,2,3,4,6,7,8,9,5];
+	function sup(arr,num){
+		for(var i=0;i<arr.length;i++){
+			for(var j=i+1;j<arr.length;j++){
+				if(arr[i]+arr[j]==num){
+					return console.log(arr[i],arr[j])
+				}
+			}
+		}
+	}
+	sup(arr,14)
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

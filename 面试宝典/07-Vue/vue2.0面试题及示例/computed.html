@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="vue.js"></script>
+	</head>
+	<body>
+		<div id="test">
+		<input type="text" v-model="inputValue">
+		<h1>{{changeVaule}}</h1></div>
+		<script>
+		new Vue({
+		  el:'#test',
+		  data:{
+		    changeVaule:'123',
+		    inputValue:''
+		  },
+		  computed:{
+		    changeVaule:function(){
+		      if(this.inputValue!==''){
+		        return this.inputValue;
+		      }else{
+		        return 'empty';
+		      }
+		    }
+		  }
+		})
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>随机去重排序</title>
+	<script>
+	//建立一个数组，生成100个保留2位小数的随机数添加到这个数组中，然后对这个数组去重，然后从大到小排序。
+	var arr=[];
+	for(var i=0;i<100;i++){
+		arr.push(Math.random().toFixed(2));
+	}
+	var arr1=[];
+	for(var j=0;j<arr.length;j++){
+		if(arr1.indexOf(arr[j])==-1){
+			arr1.push(arr[j])
+		}
+	}
+	arr1.sort(function(a,b){
+		return b-a;
+	})
+	console.log(arr1)
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

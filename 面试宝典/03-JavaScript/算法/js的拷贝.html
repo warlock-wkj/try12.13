@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js的拷贝</title>
+	<script>
+	function deepCopy(source){
+		var result={};
+		for(var i in source){
+			if(typeof source[i]==="object"){
+				result[i]=deepCopy(source[i])
+			}else{
+				result[i]=source[i]
+			}
+		}
+		return result;
+	}
+	var a={name:'Tom'};
+	console.log(deepCopy(a));//{name:'Tom'}
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

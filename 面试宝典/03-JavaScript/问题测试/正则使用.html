@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>正则使用</title>
+	<script>
+	//用正则把yya yyb yyc变成yya5 yyb6 yyc7
+	function reg1(count,str){
+		str.replace(/\w+/g,function(m){
+　　		return console.log(m+count++)
+		})
+	}
+	reg1(5,'yya yyb yyc')
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

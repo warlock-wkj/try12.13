@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>把URL参数解析为一个对象</title>
+	<script>
+	function parseQueryString(str){
+		// var str=window.location.href;//获取url
+		var arr=str.split('?');//切割，获取参数
+		var str1=arr[1];
+		var arr1=str1.split('&');//切割，获取每一个参数
+		var arr2=[];
+		var obj={};
+		for(var i=0;i<arr1.length;i++){
+			arr2[i]=arr1[i].split('=')
+		}
+		for(var j=0;j<arr2.length;j++){
+			obj[arr2[j][0]]=arr2[j][1]
+		}
+		return obj;
+	}
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

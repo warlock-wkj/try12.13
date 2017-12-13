@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+
+    </style>
+    <script>
+        var arr=[23,10,90,900,-100];
+
+        function quickSort(arr){
+            if(arr.length<=0){
+                return [];
+            }
+
+            var cIndex=Math.floor(arr.length/2);
+            var c=arr.splice(cIndex,1);
+            console.log(c);
+            var left=[];
+            var right=[];
+            // 再取左右两边的数组值
+            for(var i=0; i<arr.length; i++){
+                if(arr[i]<c[0]){
+                    left.push(arr[i]);
+                    // left: [23,10,-100]
+                    // left: [-100]
+                    // [-100,10,23,90,900]
+                }else{
+                    right.push(arr[i]); //[900]
+                    // [23]
+                }
+            }
+
+            //left c right
+            return quickSort(left).concat(c,quickSort(right));
+        }
+
+        document.write(quickSort(arr));
+    </script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+

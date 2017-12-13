@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>将一组数据按照日期排序</title>
+</head>
+<body>
+	<ul>
+	    <li>2011-1-1</li>
+	    <li>2011-1-7</li>
+	    <li>2011-1-2</li>
+	    <li>2011-3-1</li>
+	    <li>2011-2-1</li>
+	</ul>
+	<script type='text/javascript'>
+	var ul = document.getElementsByTagName('ul')[0];
+	var lis = ul.getElementsByTagName('li');
+	var ux = [];
+	for (var i=0; i<lis.length; i++){
+	    var tmp = {};
+	    tmp.dom = lis[i];
+	    tmp.date = new Date(lis[i].firstChild.data.replace(/-/g,'/'));//设置日期
+	    ux.push(tmp);
+	}
+	ux.sort(function(a,b){//排序
+	    return a.date - b.date;
+	});
+	for (var i=0; i<ux.length; i++){//重新渲染
+	    ul.appendChild(ux[i].dom);
+	}
+	</script>
+</body>
+</html>

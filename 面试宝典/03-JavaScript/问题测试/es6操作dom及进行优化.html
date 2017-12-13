@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>es6操作dom及进行优化</title>
+</head>
+<body>
+	<ul id="list" class="foo">
+		<li>#0</li>
+		<li>
+			<span>#1</span>
+		</li>
+		<li>#2</li>
+		<li>#3</li>
+		<li>
+			<ul>
+				<li>#4</li>
+			</ul>
+		</li>
+		<li>
+			<a href="//v2ex.com">#99998</a>
+		</li>
+		<li>#999999</li>
+		<li>#100000</li>
+	</ul>
+	<script src="jquery.js"></script>
+	<script>
+		$('ul').addClass('bar')
+		$('#list').find('li').eq(0).remove()
+		$('#list').find('li').eq(6).append(function(){
+			return "<li><yxfin.com/>aaaaaaaa</li>"
+		})
+		$('#list').on('click','li',function(){
+			console.log($(this).index())
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>lazy</title>
+	<script>
+	// 实现一个LazyMan，可以按照以下方式调用:
+	// LazyMan(“Hank”)输出:
+	// Hi! This is Hank!
+	//  
+	// LazyMan(“Hank”).sleep(10).eat(“dinner”)输出
+	// Hi! This is Hank!
+	// //等待10秒..
+	// Wake up after 10
+	// Eat dinner~
+	//  
+	// LazyMan(“Hank”).eat(“dinner”).eat(“supper”)输出
+	// Hi This is Hank!
+	// Eat dinner~
+	// Eat supper~
+	//  
+	// LazyMan(“Hank”).sleepFirst(5).eat(“supper”)输出
+	// //等待5秒
+	// Wake up after 5
+	// Hi This is Hank!
+	// Eat supper
+	//  
+	// 以此类推。
+	// 首先我们看到例子有几个特点，一个是我们调用Lazyman的时候不需要用到new关键字，这意味着我们需要使用工厂函数；另一个是要我们实现链式调用。
+	// 我们看到LazyMan(“Hank”).eat(“dinner”).eat(“supper”)这样的形式，无疑是链式调用了；还有一个难点就是 LazyMan(“Hank”).sleepFirst(5).eat(“supper”)
+	// 当存在sleepFirst时，我们还要先等待一段时间，然后再开始报名字，这就说明sleepFirst优先级更高，不管何时注册，都要第一个执行，仔细想想
+	// 有什么可以实现这个呢？明显我们需要一个任务队列，而且sleepFirst放在最前面，然后等所有任务都安排好了，才开始执行任务队列
+	// 恩？那说明执行任务不能紧跟在插入任务全程的后面，那我们见他们分进两个事件队列就好了，这就需要借助setTimeout函数了;
+	// 除此之外，一个任务完成了，我们怎么通知任务队列去取下一个任务呢？这就需要一个尾调用。
+	function _LazyMan(name) {
+	    this.tasks = [];   
+	    var self = this;
+	    var fn =(function(n){
+	        var name = n;
+	        return function(){
+	            console.log("Hi! This is " + name + "!");
+	            self.next();
+	        }
+	    })(name);
+	    this.tasks.push(fn);
+	    setTimeout(function(){
+	        self.next();
+	    }, 0); // 在下一个事件循环启动任务
+	}
+	/* 事件调度函数 */
+	_LazyMan.prototype.next = function() { 
+	    var fn = this.tasks.shift();
+	    fn && fn();
+	}
+	_LazyMan.prototype.eat = function(name) {
+	    var self = this;
+	    var fn =(function(name){
+	        return function(){
+	            console.log("Eat " + name + "~");
+	            self.next()
+	        }
+	    })(name);
+	    this.tasks.push(fn);
+	    return this; // 实现链式调用
+	}
+	_LazyMan.prototype.sleep = function(time) {
+	    var self = this;
+	    var fn = (function(time){
+	        return function() {
+	            setTimeout(function(){
+	                console.log("Wake up after " + time + "s!");
+	                self.next();
+	            }, time * 1000);
+	        }
+	    })(time);
+	    this.tasks.push(fn);
+	   return this;
+	}
+	_LazyMan.prototype.sleepFirst = function(time) {
+	    var self = this;
+	    var fn = (function(time) {
+	        return function() {
+	            setTimeout(function() {
+	                console.log("Wake up after " + time + "s!");
+	                self.next();
+	            }, time * 1000);
+	        }
+	    })(time);
+	    this.tasks.unshift(fn);
+	    return this;
+	}
+	/* 封装 */
+	function LazyMan(name){
+	    return new _LazyMan(name);
+	}
+
+	console.log(LazyMan("Hank"))
+	// Hi! This is Hank!
+	//  
+	console.log(LazyMan("Hank").sleep(10).eat("dinner"))
+	// Hi! This is Hank!
+	// //等待10秒..
+	// Wake up after 10
+	// Eat dinner~
+	//  
+	console.log(LazyMan("Hank").eat("dinner").eat("supper"))
+	// Hi This is Hank!
+	// Eat dinner~
+	// Eat supper~  
+	console.log(LazyMan("Hank").sleepFirst(5).eat("supper"))
+	// //等待5秒
+	// Wake up after 5
+	// Hi This is Hank!
+	// Eat supper
+
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+		.box2 div {
+			display: none;
+		}
+		a.on {
+			background: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div class="box1">
+			<!-- 选项 -->
+			<a href="#">1</a>
+			<a href="#">2</a>
+			<a href="#">3</a>
+		</div>
+		<div class="box2">
+			<!-- 对应选项显示的内容 -->
+			<div style="display: block;">1</div>
+			<div>2</div>
+			<div>3</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	function tab (id) {
+		// 先获取最外层的父盒子
+		var oBox = document.getElementById(id);
+		var box1 = oBox.children[0];
+		var box2 = oBox.children[1];
+
+		// 获取所有的a标签
+		var aLi = box1.children;
+		var aDiv = box2.children;
+
+		for (var i = 0;i < aLi.length;i++) {
+			aLi[i].index = i;
+			aLi[i].onclick = function () {
+				// 先清空所有,再给自己添加
+				for (var j = 0;j < aLi.length;j++) {
+					aLi[j].className = '';
+					aDiv[j].style.display = 'none';
+				}
+				// 给自己添加
+				this.className = 'on';
+				aDiv[this.index].style.display = 'block';
+			}
+		}
+
+
+	}
+</script>

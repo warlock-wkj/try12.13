@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>把一个函数的arguments转化成真正的数组</title>
+	<script>
+	function f(){  
+   
+	    var as1 = Array.prototype.slice.call(arguments,0);   
+	    var as2 = Array.apply(this, arguments);  
+	    var as3 = Array.apply(null, arguments);  
+	    var as4 = Array.prototype.splice.call(arguments,0,arguments.length);   
+	    console.log(as1);  
+	    console.log(as2);  
+	    console.log(as3);  
+	    console.log(as4);  
+	}  
+	f(1, 2, 3);  
+	f("a", "b");  
+	f(true);  
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

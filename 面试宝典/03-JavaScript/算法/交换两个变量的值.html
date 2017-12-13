@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>交换两个变量的值</title>
+	<script>
+	let a=10,b=5;
+	//方法一：采用中间值
+	let c;
+	c=a;
+	a=b;
+	b=c;
+	console.log(a,b)//5 10
+	//方法二：运用+,-运算
+	function swap(a,b){
+		b=b-a;
+		a=a+b;
+		b=a-b;
+		return [a,b];
+	}
+	console.log(swap(a,b))//[10,5]
+	//方法三：利用位运算
+	a=a^b;
+	b=b^a;
+	a=a^b;
+	console.log(a,b)//10,5
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

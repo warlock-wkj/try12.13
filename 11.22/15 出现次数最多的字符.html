@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	
+</body>
+</html>
+<script type="text/javascript">
+	var str = 'wwwwwwwweeeeeeeaaaesssccc';
+	var json = {};
+	for (var i = 0;i < str.length;i++) {
+		var x = str.charAt(i);// w e a s c
+		if (json[x] == undefined) {
+			json[x] = 1;
+		} else {
+			json[x]++;
+		}
+	}
+	// 字符  数字
+	var char = '';
+	var max = 0;
+	for (var key in json) {
+		if (max < json[key]) {
+			max = json[key];
+			char = key;
+		}
+	}
+	console.log(max,char);
+	console.log(JSON)
+</script>

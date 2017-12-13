@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="vue.js"></script>
+		
+	</head>
+	<body>
+		<div id="box" @click="dianji">{{a}}</div>
+		<script>
+			var data = { a: 1111 }
+		    var vm = new Vue({
+		    	el:'#box',	
+		        data: data,
+		        methods:{
+		        	dianji(){
+		        		console.log(vm.a === data.a)// -> true
+		        		// 设置属性也会影响到原始数据
+					    vm.a = 2222
+					    console.log(data.a) // -> 2222
+					    // ... 反之亦然
+					    data.a = 3333
+					    console.log(vm.a) // -> 3333
+		        	}
+		        }
+		    })
+		</script>
+	</body>
+</html>

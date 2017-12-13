@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <title>使用AJAX分页</title>  
+    <script src="jquery.js" type="text/javascript"></script>  
+    <style type="text/css">  
+      
+      table{ margin:80px 600px; }  
+      td{ width:50px; height:auto}  
+      div{ width:50px; height:30px; border:1px solid Black; background-color:lavender; line-height:30px ; text-align:center}  
+      #txtPage{ width:25px; height:25px; line-height:25px; margin:0px; }  
+          
+        .style1  
+        {  
+            height: 36px;  
+        }  
+          
+    </style>  
+    <script type="text/javascript">  
+  
+        var currentPage = 1; //当前页  
+        var pageCount = 0; //总页数。目前=0然后会在getPageData里重新给pageCount赋值。得到一个真正的总页数  
+  
+        var getPageData = function (currentPage) {  
+  
+            $.get("API/GetPageData.ashx?currentPage=" + currentPage + "", function (obj) { //假设当前页是第二页currentPage=2  
+  
+                var arr = obj.split("|");  
+  
+                var JsonData = arr[0]; //获取Json格式的字符串数据  
+  
+                JsonData = $.parseJSON(JsonData); //将字符串转换成Json对象  
+  
+                //debugger;  
+                for (var i = 0; i < JsonData.length; i++) {  
+                    var data = "<tr><td >" + JsonData[i].Locid + "</td><td >" + JsonData[i].LocName + "</td><td >" + JsonData[i].ParentId + "</td><td >" + JsonData[i].LocType + "</td><td >" + JsonData[i].ElongCode + "</td><td >" + JsonData[i].CityCode + "</td><td >" + JsonData[i].BaiduPos + "</td><td >" + JsonData[i].Versions + "</td></tr>";  
+                    $("#t1").append(data);  
+  
+                }  
+  
+  
+  
+                //-----------------下面做页码标签  
+  
+  
+                pageCount = arr[1]; //获取总页数  
+                var getDivAll = $("#t2 div"); //获取所有div  
+                //---给div取名字(赋值)  
+                if (currentPage == 1); //当 当前页为第一页的时候的处理方式  
+                {  
+                    $.each(getDivAll, function (key, val) {  
+                        if (key == 0) {  
+                            $(this).text("返回");  
+                        }  
+                        else {  
+                            $(this).text(key);  
+                        }  
+                        if (key == getDivAll.length - 1) {  
+                            $(this).text("下一页");  
+                        }  
+                        if (key == getDivAll.length - 2) {  
+                            $(this).html("<input type='text'id=txtPage />/100页");  
+                        }  
+                        if (key == getDivAll.length - 3) {  
+                            $(this).text("..." + pageCount);  
+                        }  
+  
+                    })  
+                }  
+                if (currentPage != 1 && currentPage <= 6) {  //当 当前页小于7并且不等于1的时候的处理方式  
+                    $.each(getDivAll, function (key, val) {  
+                        if (key == 0) {  
+                            $(this).text("返回");  
+                        }  
+                        else {  
+                            $(this).text(key - 1);  
+                        }  
+                        if (key == 1) {  
+                            $(this).text("<<");  
+                        }  
+                        if (key == getDivAll.length - 1) {  
+                            $(this).text("下一页");  
+                        }  
+                        if (key == getDivAll.length - 2) {  
+                            $(this).html("<input type='text'id=txtPage />/100页");  
+                        }  
+                        if (key == getDivAll.length - 3) {  
+                            $(this).text("..." + pageCount);  
+                        }  
+  
+                    })  
+                }  
+  
+                var i = 5; //这个i=5的作用:假如但前页大于第6页的时候，页码标签从当前页减去i开始显示。然后这个i减去1  
+                //例如 当前页是第十页，那么10-5=5 那么页码标签从5开始显示 即显示5 6 7 8 9 10 11 12 13 14  
+                if (currentPage > 6 && currentPage <= pageCount) { //当 当前页大于6切小于等于最后一页的时候的处理方式  
+                    $.each(getDivAll, function (key, val) {  
+                        if (key == 0) {  
+                            $(this).text("返回");  
+                        }  
+                        else {  
+                            $(this).text(currentPage - i);  
+                            i = i - 1;  
+                        }  
+                        if (key == 1) {  
+                            $(this).text("<<");  
+                        }  
+                        if (key == getDivAll.length - 1) {  
+                            $(this).text("下一页");  
+                        }  
+                        if (key == getDivAll.length - 2) {  
+                            $(this).html("<input type='text'id=txtPage />/100页");  
+                        }  
+                        if (key == getDivAll.length - 3) {  
+                            $(this).text("..." + pageCount);  
+                        }  
+  
+                    })  
+                }  
+  
+  
+            })  
+  
+        }  
+  
+  
+        //---------------------------------当点击div元素引发事件。  
+  
+  
+        $(function () {  
+  
+            $("#t2 div").click(function () {  
+  
+                $("#t1 tr:not(:eq(0))").remove();  //在点击div触发事件后，载入数据的时候先清空原始的数据（第一行数据除外）  
+  
+                if ($(this).text() == "<<") {  
+                    getPageData(parseInt(currentPage) - 1); //调用 getPageData()方法，参数是当前页减1（这里做了数据转换）  
+                    currentPage = currentPage - 1; //将请当前页更新(即：当前页从原来的数值更新为减去1后的值了)  
+  
+                }  
+                else if ($(this).text() == "返回") {  
+                    getPageData(1);  
+                    currentPage = 1;  
+                }  
+                else if ($(this).text() == "..." + pageCount) {  
+                    getPageData(pageCount);  
+                    currentPage = pageCount;  
+                }  
+                else if ($(this).text() == "下一页") {  
+                    getPageData(parseInt(currentPage) + 1)  
+                    currentPage = currentPage + 1;  
+                }  
+  
+                else {  
+                    currentPage = $(this).text();  
+  
+                    getPageData(parseInt(currentPage));  
+  
+                }  
+  
+            })  
+        })     
+    </script>  
+</head>
+<body  onload="getPageData(1)">  
+ <table border="1" cellpadding="3px" cellspacing="0px" style="margin-top:50px; margin-left:50px ;width:700px;" id="t1">  
+    <tr><td>编号</td><td >城市名</td><td >父ID</td><td >locType</td><td >elongCode</td><td >CityCode</td><td >BaiduPos</td><td >Version</td></tr>  
+ </table>  
+    
+  <table style="margin-top:50px; margin-left:50px" id="t2">  
+   <tr>  
+         <td class="style1"><div></div></td><td class="style1"><div id="DisyDiv"></div></td><td class="style1"><div></div></td>  
+        <td class="style1"><div></div></td><td class="style1"><div></div></td><td class="style1"><div></div></td>  
+        <td class="style1"><div></div></td><td class="style1"><div></div></td><td class="style1"><div></div></td>  
+        <td class="style1"><div></div></td><td class="style1"><div></div></td><td class="style1"><div></div></td>  
+        <td class="style1"><div></div></td><td class="style1"><div style="width:75px; padding:0px"></div></td><td class="style1"><div></div></td>  
+    </tr>  
+  </table>  
+
+ </body>  
+</html>

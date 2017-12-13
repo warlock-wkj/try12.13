@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	function show(){
+		alert('aaa');
+	}
+	var obj=function(msg){
+		this.msg=msg;
+		this.show=function(){
+			alert(this.msg);
+		}
+		this.waitAndShout=function(){
+			setTimeout(function(){
+				this.show();
+			},1000)
+		}
+	}
+	var aa=new obj('abc');
+	aa.waitAndShout();
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

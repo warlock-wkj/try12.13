@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+		div {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			position: absolute;
+			left: 100px;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+	<div></div>
+</body>
+</html>
+<script type="text/javascript">
+	var oDiv = document.getElementsByTagName('div')[0];
+
+	document.onclick = function () {
+		// oDiv.style.left = '500px';
+		var left = oDiv.offsetLeft;
+		setInterval(function () {
+			left++;
+			// oDiv.style.left = oDiv.offsetLeft + 10 +'px'; 不好
+		},16);
+	}
+</script>

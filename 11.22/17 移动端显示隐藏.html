@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+	<style type="text/css">
+		div {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+	</style>
+	<script type="text/javascript" src="zepto/dist/zepto.js"></script>
+</head>
+<body>
+	<button>显示</button>
+	<div></div>
+</body>
+</html>
+<script type="text/javascript">
+	
+	// var oBtn = document.getElementsByTagName('button')[0];
+
+	// var oDiv = document.getElementsByTagName('div')[0];
+	// // touchstart touchend: 相当于 onmousedown onmouseup
+
+	// oBtn.onclick = function () {
+	// 	oDiv.style.display = 'none';
+	// }
+	$('button').click(function () {
+		$('div').hide()
+	});
+
+</script>

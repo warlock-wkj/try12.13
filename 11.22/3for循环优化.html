@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	
+</body>
+</html>
+<script type="text/javascript">
+	var arr = [];
+	for (var i = 0;i < 10000;i++) {
+		arr.push(i)
+	}
+	// var len = arr.length;
+	// 记录当前时间1
+	var time1 = Date.now();
+	console.log(time1)
+	for (var i = 0,len=arr.length;i < len;i++) {
+		console.log(1);
+	}
+	// 记录时间2
+	var time2 = Date.now();
+	// for循环所用的时间 = 2 - 1
+	console.log(time2 - time1);
+</script>

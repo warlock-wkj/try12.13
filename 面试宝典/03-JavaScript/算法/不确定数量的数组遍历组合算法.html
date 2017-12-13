@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>不确定数量的数组遍历组合算法</title>
+	<script>
+	//这题的意思就是说。相当于说[1,2,3],[4,5]。。。。的不确定个数的数组进行遍历组合，组成[[1,4],[1,5],[2,4],[2,5],[3,4],[3,5]]这样。然后数组越多，组出来就肯定越多。
+	var arr=[[1,2,3],[4,5]];
+	function group(arr,re){
+		if(arr.length<=0){
+			return re;
+		}
+		if(!re){
+			var arr=arr.slice();//[1,2,3] [4,5]
+			var re=arr.shift();[4,5]
+			return group(arr,re);
+		}else{
+			var now=arr.shift();//1,2,3
+			var newre=[];
+			for(var j=0;j<now.length;j++){
+				for(var k=0;k<re.length;k++){
+					var temp=[];
+					if(re[k] instanceof Array){
+						temp=re[k];
+					}else{
+						temp.push(re[k]);
+					}
+					newre.push(temp.concat(now[j]));
+				}
+			}
+			return group(arr,newre)
+		}
+	}
+	console.log(group(arr))
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

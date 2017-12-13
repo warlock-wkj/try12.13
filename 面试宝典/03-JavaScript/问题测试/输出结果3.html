@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>this问题</title>
+	<script>
+	var name="mingming";
+	var Me={
+		name:"baibai",
+		say:function(){
+			return function(){
+				alert(this.name);
+			}
+		}
+	}
+	var cur=Me.say();
+	cur();//mingming
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

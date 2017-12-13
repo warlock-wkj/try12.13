@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script type="text/javascript" src="angular.js"></script>
+	<script type="text/javascript">
+	var app = angular.module('app',[],function ($provide) {
+		$provide.factory('sss',function () {
+			var obj = {
+				name: 'zs',
+				age: 18,
+				eat: function () {
+					alert(1);
+				}
+			};
+			return obj;
+		});
+	});
+
+	app.provider('aaa',function () {
+
+		this.$get = function () {
+			var obj = {
+				name: 'zs',
+				age: 18
+			}
+			return obj;
+		}
+
+	});
+
+	app.factory('bbb',function () {
+		var obj = {
+				name: 'zs',
+				age: 18
+			}
+		return obj;
+	});
+
+	app.service('ccc',function () {
+		this.name = 'zs';
+		this.age = 18;
+	});
+
+	app.value('ddd',{});
+
+	app.constant('eee','http://www....');
+
+	app.controller('f',function ($scope,sss,aaa) {
+		console.log(aaa);
+		// sss.eat()
+	});
+
+	app.controller('xx',function ($scope,sss) {
+		// console.log(sss);
+		// sss.eat()
+	});
+
+	
+	</script>
+</head>
+<body ng-controller="f">
+	<div ng-controller="xx"></div>
+</body>
+</html>

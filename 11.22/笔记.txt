@@ -1,0 +1,664 @@
+如何做好网站的性能优化?
+1.http请求越少越好 --> 各种合并
+2.http请求越小越好 --> 各种压缩 (css,js,图片)
+3.图片的延迟加载
+4.使用CDN(内容分发网络): 将自己的文件挂在别人的服务器里面 (理想状态下,需要钱)
+
+
+养成良好的写代码习惯 (代码优化,性能优化):
+1.不用的东西删除掉
+2.尽量不用全局变量
+3.能用系统的坚决不用自己的 (trim())
+4.尽量使用正则操作字符串 (速度很快)
+5.DOM操作是昂贵的,能减少就减少 (只要用到了DOM里面的东西,其实就是在操作DOM,offsetLeft,document.getElementById())
+
+for循环优化:
+for (var i = 0;i < arr.length;i++) {}
+Date.now(): 获取的是当前时间的毫秒 ,等同于  getTime()
+for (var i = 0,len=arr.length;i < len;i++) {
+		console.log(1);
+	}
+可以把arr.length提取出来,理论这行代码执行一次,性能好一点,但是经过实际的测试,其实并没有什么两样
+
+嵌套循环优化: 外小内大
+for (var i = 0;i < 10;i++) {
+	for (var j = 0;j < 1000;j++) {
+		var a = 110;
+		a++
+	}
+}
+
+'use strict': js严格模式
+1.一定要用var 定义变量
+2.在{}里面定义的函数是一个局部函数,只能在该{}里面使用
+3.如果函数没人调用,就不再是window,而是undefined
+
+this: 谁调用this就是谁
+es6: 块级作用域: 只要有大括号包裹住的内容
+
+js特点: 
+1.跨平台
+2.简单
+3.弱语言: 语法简单
+4.事件驱动
+5.面向对象 
+
+高级语言: C,C++,JAVA
+
+try {
+	可能出现错误的代码
+}catch(e) {
+	e: 错误信息
+	如果出现错误,则走catch里面
+}
+
+性能低
+
+
+
+
+数据类型: number string boolean undefined object function 
+null(空对象)
+NaN: number 结果不是一个数字
+NaN == NaN: false
+typeof
+instanceof : 判断一个数据是否是父类构造函数产生的对象 
+
+数据类型的转化:
+强制转换
+转数字:
+	Number() parseInt() parseFloat()
+转字符串:
+	String() toString() 
+转boolean:
+	Boolean()
+	除了以下值,都是true:
+	0 false 空字符串 undefined null
+
+
+toFixed(): 结果是字符串 (保留几位小数的)
+
+隐式转换: 不由程序员转换
+var a = 10,b = '10';
+a + b?  1010
+
+字符串和true 或者 false比较,值都是 false
+
+自增自减:  ++ --
+a++  ++a : 本身值+1,再赋值给本身
+var a = 10;
+var b = a++;  a = 11 b = 10
+var b = ++a;  a = 11 b = 11
+如果和其他运算符一起使用,++在后,先赋值,再自增;在前,先自增,再赋值
+
+-10 % 3 = -1
+10 % -3 = 1
+
+%求余操作的时候,符号看第一个数的符号
+
+变量: 如果没用var 定义的,就是全局变量
+
+回调函数: 不由程序员调用的函数,在某个特定的时间里面自行调用;不会等待函数的执行
+
+所有的事件函数
+定时器
+
+封闭空间:
+1.解决i值问题
+2.变量冲突问题
+
+
+;(function (){
+	
+})();
+
+闭包: 子函数可以调用父函数的变量 (深入理解)
+
+作用域链: 先从自己找 --> 上一层-->...-->全局 --> 报错
+
+禁止多层嵌套: 内存泄漏
+function show1 () {
+	var a = 10;// 回收
+	function show2 () {
+		function show3() {
+			..show100() {
+			 console.log(a)
+			}
+		}
+	}
+}
+
+
+数组: 方法 排序(二分法,快排,冒泡算法)  去重 
+
+字符串:
+
+DOM:
+
+数组方法:
+concat():连接数组
+数据结构: 算法
+栈: 添加删除 (先入后出)
+[1,2,3,4,5]
+push(): 在末尾添加  (返回值是数组长度)
+pop(): 在末尾删除 (返回值是被删除元素)
+队列: (先进先出)
+[1,2,3,4,5]
+shift(): 在前面删除 (返回值是被删除元素)
+unshift(): 在前面添加 (返回值是数组长度)
+
+reverse(): 翻转数组
+indexOf(): 查找元素的下标 (不兼容IE8)
+splice(a,b,c)
+	a: 下标
+	b: 删除个数
+	c: 替换或者增加的元素
+在遍历数组中删除数组里面的元素,删除以后应该i--
+
+sort(function (n1,n2) {
+	return n1 - n2; 从小到大
+	return n2 - n1;
+}): 排序 
+
+slice(): 截取数组,返回值是数组,一个参数是从该下标开始截取到末尾,两个值是包头不包尾
+
+toString():转字符串,中间逗号隔开
+join('*'): 数组转字符串,中间*隔开
+
+排序算法: http://blog.csdn.net/u014682691/article/details/50787366
+
+冒泡: 从第一个数据开始,和后面的所有的数据对比,如果第一个大于后面的值,就调换位置
+
+function bubbleSort (arr) {
+	
+	for (var i = 0;i < arr.length;i++) {
+		 for (var j = i+1;j < arr.length;j++) {
+		 	if (arr[i] > arr[j]) {
+		 		var temp = arr[i];
+		 		arr[i] = arr[j];
+		 		arr[j] = temp;
+		 	}
+		 }
+	}
+}
+
+数组去重:  
+
+// 不兼容
+function quchong (arr) {
+	var tempArr = [];
+
+	for (var i = 0;i < arr.length;i++) {
+		if (tempArr.indexOf(arr[i]) == -1) {
+			tempArr.push(arr[i])
+		}
+	}
+}
+
+// 兼容
+function isFindInArr (arr,value) {
+	for (var i = 0; i < arr.length;i ++) {
+		if (arr[i] == value) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function quchong (arr) {
+	var tempArr = [];
+	for (var i = 0;i < arr.length;i++) {
+		if (!isFindInArr(tempArr,arr[i])) {
+			tempArr.push(arr[i])
+		}
+	}
+}
+
+JSON对象: {} 属性 方法
+var obj = {
+	name: 'zs',
+	age: 28
+}
+
+var a = 'name';
+
+操作属性:
+1. obj.name 
+2. obj[a]
+
+delete json.属性名
+
+
+深复制和浅复制(对象引用): 复制对象的属性和方法
+
+浅复制: 复制的是对象的内存地址,就是对象引用,复制以后的对象可以改变复制以前对象的值
+
+深复制: 只复制属性和方法,不复制地址
+
+'wwwwwwwweeeeeeeaaaesssccc': 找出出现最多的字符,并且字符个数是多少?
+{
+	w: 8,
+	e: 5,
+	s: 3,
+	c: 3 
+}
+解析数据时候使用:
+JSON.parse(): 将字符串 --> json对象
+JSON.stringify(): 将对象 --> 字符串
+
+
+字符串: 
+charAt(): 根据下标获取元素
+indexOf(): 查找元素的下标 (没有兼容性问题)
+substr() : 下标,截取长度
+substring(): 包头不包尾
+toLowerCase()
+toUpperCase()
+slice()
+split(): 根据字符分为数组
+lastIndexOf(): 从右往左查找,下标不变
+
+首字母大写: we are family
+split(' ') --> 取得数组里面每个元素的第一个字符,并且转化为大写 --> 连接后面的字符 --> join(' ')
+
+字面量的写法: {} new Object  [] new Array()  new ExpReg()
+
+
+正则: 操作字符串 //  是  
+
+符号:
++: 至少一个,多了不限  {1,}
+*: 任意个,可以没有,也可以很多 {0,}
+?: 可有可无 {0,1}
+.: 任意字符 (一个)
+{}: 范围
+(): 组合
+^: 开始
+$: 结束
+[]: 或者 [abc] [a-z][0-9][a-zA-Z0-9] 只代表一个
+|: 或者 a|b|c 
+\: 转义字符
+
+\d: 纯数字
+\w: 数字字母下划线
+\s: 空格
+
+\D: 非数字
+\W: 除了数字字母下划线
+\S: 非空格
+
+i: 忽略大小写
+m: 多行
+g: 全局
+
+匹配中文: [\u4e00-\u9fa5]
+特点:
+1.蠢
+2.贪婪
+3.懒惰
+
+字符串: 
+替换敏感词
+var str = '啊科技时代撒娇了宽度阿萨德雷克萨李达康撒了点击撒了点击撒了宽度'
+str.replace('撒了','**');
+
+str.replace(/撒了|李达康/g,function (s) {
+	s: 查找到的
+	var x = '';
+	for (var i = 0;i < s.length;i++) {
+		x += '*'
+	}
+	return x;
+});
+
+match(): 查找匹配的字符串,结果是数组
+
+var str = 'aaaabbb1213  kkjljkj21  22';
+
+str.match(/\d+/g);
+
+正则:
+test(): true false  表单验证
+var reg = /^(正则规则)$/g;
+
+reg.test(str);
+
+
+写正则: 拆
+
+检验邮箱?
+
+xx@qq.com
+@163.com
+
+一定要写,写出来以后,自己都看不懂
+选项卡
+
+function random (n,m) {
+	return Math.floor(Math.random() * (m - n) + n);
+}
+
+Math.random(): [0,1)
+
+Math.floor()
+Math.ceil()
+Math.abs()
+Math.max()
+Math.min()
+Math.round()
+Math.pow(n,m): n的m次方
+Math.sqrt(): 开平方
+
+js的组成部分: ECMAScript DOM BOM
+
+BOM: 
+history.forward(): 前进
+history.back(): 后退
+history.go(): -1是后推,1是前进
+
+navigator.userAgent
+
+location.url port  hash  search...
+
+open(url,_target或者是_self): 打开新窗口,返回值新窗口的window对象
+
+close(): 关闭窗口
+
+DOM树
+
+节点
+
+父子关系:
+	父节点: parentNode
+
+	子节点: childNodes: 包括空格
+			children 不包括空格
+
+兄弟关系:
+	上一个兄弟节点: 
+	    previousElementSibling || previousSibling
+	下一个兄弟节点:
+	    nextElementSibling || nextSibling
+
+第一个子节点: firstElementChild || firstChild
+最后一个子节点: lastElementChild || lastChild
+
+有关于宽高:
+offsetWidth:
+offsetHeight: padding + border + content
+
+clientWidth:
+clientHeight: padding + content
+
+浏览器可视区的宽高:
+document.documentElement.clientHeight || document.body.clientHeight
+
+事件: onscroll 滚动时触发
+
+滚动:
+document.documentElement.scrollTop || document.body.scrollTop
+scrollLeft
+
+scrollHeight: 滚动高度; 如果内容高小于盒子高,那么scrollHeight就是盒子高;如果超出盒子高度,则是内容高度
+
+位置:
+offsetLeft:
+offsetTop: 到具有定位父级的上边或者左边的距离,包括margin,left,top
+
+结构父级: parentNode
+定位父级: offsetParent
+div>h1
+
+绝对位置: 到浏览器窗口上边或左边的距离
+
+function getPos (obj) {
+	var left = 0,top = 0;
+	while (obj) {
+		left += obj.offsetLeft;
+		top += obj.offsetTop;
+		obj = obj.offsetParent
+	}
+	return {left: left,top: top}
+}
+
+吸顶条 
+图片的延迟加载
+
+DOM经典操作:
+createElement(): 创建元素,只能使用一次
+如果需要再次使用创建的元素
+cloneNode(): 没有参数,只克隆结构,不克隆内容;如果需要克隆内容,加上true
+
+父.appendChild(子)
+
+父.insertBefore(插入的元素,插入谁前面)
+
+父.removeChild()
+
+事件: onclick ... DOM0级
+onmouseover onmouseout: 在移入子元素也会触发
+onmouseenter onmouseleave
+
+DOM2:
+跨浏览器添加事件
+
+addEventListener(type,事件函数,事件流)
+事件流: 
+捕获流: 从外往里
+冒泡: 从里往外
+function addEvent(obj,type,fn) {
+	// 高版本
+	if (obj.addEventListener) {
+		return obj.addEventListener(type,fn,false);
+	} else {
+		return obj.attachEvent('on'+type,fn);
+	}
+}
+
+function removeEvent(obj,type,fn) {
+	// 高版本
+	if (obj.addEventListener) {
+		return obj.removeEventListener(type,fn,false);
+	} else {
+		return obj.detachEvent('on'+type,fn);
+	}
+}
+
+事件对象: 获取事件发生的位置  键码 阻止默认事件  取消冒泡 
+evt = evt || window.event;
+clientX,clientY: 以窗口左上角,不包括滚动的距离
+pageX,pageY: 低版本不兼容,包括滚动距离
+screenX,screenY: 以电脑屏幕左上角
+keyCode: 键码
+
+
+默认事件:
+DOM0: return false;
+DOM2: evt.preventDefault();
+
+取消冒泡:
+evt.cancelBubble = true;
+
+事件委托: 把自己的事件让父级实现: 
+evt.target||evt.srcElement
+
+
+PC和移动端: 布局不一样,js基本是一样,除了touch事件; zepto (和jQuery用法一模一样)
+
+面向对象:
+
+原型链:
+先从自己的原型找-->上一级找-->上一级-->Object-->null
+
+obj.__proto__ --> obj.__proto__.__proto__-->obj.__proto__.__proto__.__proto__
+
+设计模式: 二十三种设计模式 (单例,工厂模式,委托)
+
+创建: 
+
+工厂模式创建对象:
+function creatObj (name,age) {
+	var obj = new Object(); // 原料
+
+	// 加工
+	obj.name = name;
+	obj.age = age;
+	obj.eat = function () {}
+	// 出厂
+	return obj;
+}
+
+构造函数的方式创建对象: 方法始终重复创建
+new Person()
+1.自动帮你创建了一个obj
+2.将obj的值赋给了this
+3.return this
+function Person (name,age) {
+	this.name = name;
+	this.age = age;
+	this.eat = function () {}
+}
+
+构造函数+原型的方式创建:
+原型: 构造函数名.prototype
+对象获取原型: obj.__proto__
+function Person (name,age) {
+	this.name = name;
+	this.age = age;
+}
+Person.prototype.eat = function () {}
+
+原型对象可以扩展系统的方法:
+
+String.prototype.trim = String.prototype.trim || function () {
+	// this
+	return this.replace(/^\s+|\s+$/g,'');
+}
+
+继承:
+
+改变this指向
+call():会自动调用函数
+apply():会自动调用函数
+bind(): 不会调用,方法的返回值就是一个函数
+
+function  Person (name,age) {
+	this.name = name;
+	this.age = age;
+}
+Person.prototype.eat = function () {
+	
+}
+
+function Worker (name,age) {
+	//Person.call(this,name,age);
+	Person.apply(this,arguments);// 继承属性
+}
+
+// 继承方法
+Worker.prototype = new Person();
+Worker.prototype.constructor = Worker;
+
+document.cookie: 获取
+document.cookie = "key=value;path=/;expires="+new Date().getDate() + 7
+本地存储方式有哪些?
+cookie session:
+cookie存储在客户端,session存储在服务器端;
+cookie大小只有4kb,最多存储20个
+cookie存在过期时间
+不安全
+必须在服务器环境下执行
+
+localStorage  sessionStorage
+
+都是存储在客户端
+localStorage5M,sessionStorage5M
+localStorage永久存储,sessionStorage,会话关闭,就消失
+不安全
+不用在服务器环境下
+
+ajax: 原生ajax
+
+get和post:
+1.get只能发送4kb的数据,post1个G
+2.get参数是拼接url后面,post放到请求头里面
+3.get的send方法不需要参数,post需要将参数放到send()里面
+4.get不需要设置请求头,post需要设置请求头
+
+ajax兼容?
+
+//1.创建Ajax对象
+if(window.XMLHttpRequest)
+{	
+	// 兼容所有浏览器
+	var oAjax=new XMLHttpRequest();
+}
+else
+{
+	var oAjax=new ActiveXObject("Microsoft.XMLHTTP");// IE6
+}
+// 2.打开连接  是否异步
+oAjax.open('GET',url,true)
+
+//post
+oAjax.open('POST',url,true);
+oAjax.setRequestHeader("CONTENT-TYPE","application/x-www-form-urlencoded");
+
+// 3.发送
+oAjax.send();
+
+// post
+oAjax.send('a=10&b=20')
+
+// 4.接受
+
+oAjax.onreadystatechange = function () {
+	if (oAjax.readyState == 4) {
+		if (oAjax.status >= 200 && oAjax <= 299 || oAjax.status == 304) {
+			// 执行成功的回调函数
+		} else {
+			// 执行失败的回调函数
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

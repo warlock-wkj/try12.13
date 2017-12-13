@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>获取字符串里字串的位置</title>
+	<script>
+	var str="this is my ho my use";
+	var str1="my";
+	function appear(str,str_target){
+		var n=0;
+		var result=[];
+		while(str.indexOf(str_target,n)!=-1&&n<str.length){
+			result.push(str.indexOf(str_target,n));
+			n=str.indexOf(str_target,n)+str_target.length;
+		}
+		return result;
+	}
+	console.log(appear(str,str1))//[8,14]
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

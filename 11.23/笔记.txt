@@ -1,0 +1,479 @@
+获取样式: 
+function getStyle (obj,attr) {
+	if (obj.currentStyle) {
+		return obj.currentStyle[attr];
+	} else {
+		return getComputedStyle(obj,false)[attr];
+	}
+}
+
+1.先创建ajax对象
+if (window.XMLHttpRequest) {
+	var oAjax = new XMLHttpRequest();
+} else {
+	var oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+}
+open
+
+send
+
+onreadystatechange
+
+oAjax.readyState == 4
+
+oAjax.status >= 200 && oAjax.status <= 299 || oAjax.status == 304
+
+// 数据
+oAjax.responsText
+
+一般从服务器里面获取到的数据都是字符串,解析数据
+
+
+
+字符串(str)-->对象:
+1. eval('('+str+')'): 不安全,有的时候会引起eval注入
+2. JSON.parse(str)
+
+对象-->字符串: JSON.stringify()
+
+get: 有缓存:  加随机因子  t= Math.random() * Math.random()  new Date()
+
+如何用ajax实现跨域请求数据?
+不能实现跨域,使用jsonp实现跨域
+
+在script中,写src属性,将接口放入src中,得自己手动设置回调函数
+
+1.先拿接口往浏览器里面测试
+2.手动创建script,赋值src
+3.设置全局的函数
+4.用完即扔(从head里面移除)
+
+jQuery: 库 想怎么用就怎么用  
+框架: 得按照一定的限制使用
+
+
+
+1.7.2
+
+3.*
+
+$(function () {
+	
+}) --> ready
+
+DOM0级事件和DOM2级事件有什么不同?
+DOM2级事件不会形成事件的覆盖
+$(document).ready(function () {});
+
+click()  dblclick()....
+
+show()  hide() hover(function () {移入}, function (){移出})
+
+toggle(function () {1},function (){2}): 3.* 已经改动了
+
+事件的绑定:
+on(type,function () {})
+on('click mouseenter mouseleave',function () {})
+on({
+	click: function () {},
+	mouseenter: function () {}
+})
+
+事件委托:
+$(父选择器).on(type,子选择器,function () {})
+
+事件移除:
+off(): 移除所有事件
+off(type): 移除该类型的事件
+off(type,function () {}): 移除这个事件的事件函数
+
+在jQuery的事件函数里面,this指的是原生js对象
+js-->jq: $(js对象)
+jq-->js: 取下标的形式
+
+在jq里面添加事件(样式)的事件,只要满足该选择器,所有的元素都将添加上事件(样式)
+
+eq(下标): 取出来的是 jq对象
+
+index(): 同级元素下标
+
+样式:
+css(属性名,属性值): 设置一个
+css({属性名: 属性值,...}): 设置多个
+css(属性名): 获取样式属性值
+
+标签属性
+attr(属性名,属性值): 设置一个
+attr({属性名: 属性值,...}): 设置多个
+attr(属性名): 获取样式属性值
+
+值:
+双标签
+html(): 获取
+html(内容): 设置
+表单元素
+val(): 获取
+val(内容): 设置
+
+bind(type,function (){}): 绑定事件,和on类似,3以后建议使用on
+
+选择器,事件,样式,属性,值,DOM操作,宽高,绝对位置,动画,ajax,插件
+
+A.append(B): 将B添加到A里面的最后面
+A.appendTo(B): 将A添加B里面的最后面
+
+A.prepend(B):
+A.prependTo(B):最前面
+
+A.insertBefore(B): 将A插入到B的前面
+A.insertAfter(B): 将A插入到B的后面
+
+A.remove(): 删除A元素
+A.empty(): 清空A元素里面的内容
+
+children(): 子元素
+parent(): 父元素
+clone(): 克隆节点
+
+宽高:
+width(): 
+height(): 内容
+
+innerWidth()
+innerHeight(): 内容+padding
+
+outerWidth()
+outerHeight(): 内容+padding=border
+
+原生: document.documentElement.scrollTop || document.body.scrollTop
+scrollTop(): 向上滚动的距离
+scrollLeft(): 向左滚动的距离
+
+绝对位置: offset().left  .top
+
+动画: 先停止动画 .stop()
+slideDown()
+slideUp()
+
+fadeIn()
+fadeOut()
+
+show()
+hide()
+
+animate({样式属性名: 样式属性值},动画时间,速率,fn): 动画执行完毕以后的回调函数
+
+写插件:
+
+$.extend({方法名: fn}): 只能使用$
+$.fn.extend({方法名: fn}): 只要是jq对象,都能调用
+
+$ == jQuery
+$.fn == jQuery.prototype
+
+ajax:
+
+默认是get
+$.ajax({
+	type: 'get  post',
+	url: 接口,
+	data: 参数,
+	success: fn,
+	error: fn,
+	cache: false,缓存
+	async: true 异步,
+	timeout: 超时
+	complete: fn
+})
+
+$.get(url,fn)
+
+jsonp:
+
+$.ajax({
+	dataType: 'jsonp',
+	url:,
+	data:,
+	success: function(str) {
+		var data = JSON.parse(str);
+		// data = {list: [{},{},{},{}]};
+		// 渲染页面
+	}
+});
+
+ejs: 模板 <%  js逻辑代码 %>  <%=data[0].title %>
+
+模板引擎: 写的都是html代码,但是可以在里面动态解析数据
+
+artTemplate.js
+
+原生写法: 和ejs写法一模一样  <%  js逻辑代码 %>  <%=data[0].title %>
+
+新写法: 和angular非常相似  {{逻辑代码}}
+
+模板写到script标签里面,type="text/html"  id=""
+
+template(id,数据对象)
+
+新写法:
+循环: $index: 下标; $value: 数组里面每个元素
+{{each 数字名字}}
+重复创建的元素
+{{/each}}
+
+each 数组名字 as 值的名字 下标名字
+
+判断:
+
+{{if 判断条件}}
+	{{else if 条件}}
+		else if的代码
+	{{else}}
+		属于else的代码
+{{/if}}
+
+include : 导入其他的模板
+
+{{include 子模板的名字}}
+
+template.helper(): 定义一个公用模板函数
+
+
+angular的四大特性:
+1.双向数据绑定
+2.依赖注入: 形参位置不固定,但是形参的名字是固定的 (java)
+3.指令机制
+4.MVC 或者是 MVVM
+vm: 视图模型
+Controller: 控制数据和View
+
+$scope.a = 10; {{a}}
+
+VM: $scope
+
+angular使用做SPA(single page application)单页面应用  路由
+
+angular使用了哪些机制?
+1.脏检查
+2.指令机制
+3.路由机制
+4.消息机制 (父子控制器的通信) $emit   $on
+
+指令:ng-app ng-init ng-controller ng-model(表单元素) ng-if ng-show ng-hide
+ng-repeat ng-class ng-click ng-bind: 解决大括号闪烁的问题 ng-copy ng-cut ng-paste
+ng-change ng-checked ng-src ng-disabled ng-readonly 
+
+服务: $scope $http $location $provide(自定义服务) $interval $timeout $document 
+$http({
+	url: ,
+	method: ,
+	params: {}
+}).then(function (str) {
+	str.data
+},function () {})
+
+$http.jsonp(url).then();
+
+url: cb  callback=  JSON_CALLBACK
+
+注册模块:
+
+<input ng-model='xxx'>
+
+var app = angular.module('app',[]);
+
+// 创建控制器
+app.controller(名字,['$scope',function ($scope) {
+	$scope.a = 10;
+	$scope.fun = function () {}
+}]);
+
+| : 管道符号,使用的是过滤器
+
+过滤器: number currency:¥  (货币$) date: 'yyyy-MM-dd hh:mm:ss' limitTo: 数字
+orderBy: 属性名:true   filter: 数据  
+
+自定义过滤器
+app.filter(过滤器的名字,function () {
+	return function (input,a,b) {
+		// input: 你要过滤的数据
+		// a,b: 就是过滤器:后面的参数
+		return 结果;
+	}
+});
+
+结合指令(ng-repeat)
+
+ng-repeat="x in data"
+
+{{x}}
+
+defer和async: 
+
+特点和共同点:
+异步加载js文件的;当浏览器碰到script的时候,不会停止文档的加载,去解析js,而是在解析js的同时,也不会去加载下面的内容; 不适合用于有DOM操作的js文件
+
+原因:
+经常使用框架,经常使用别人写好的插件,如果此类js文件特别大,就会导致页面出现空白,出现卡顿;就可以使用异步加载js
+defer和async区别:
+1.defer兼容所有的浏览器,但是async只兼容IE10+
+2.async是只要加载完成,立马就执行js,不存在js文件的依赖顺序问题;
+  defer加载完成以后,它会等待html文档解析完成以后,再去执行;处于DOMContentLoaded的前面的
+
+建议:
+1.自己写的js放在head里面
+2.别人写的放到body后面
+
+
+在angular里面,基本上已经没有了DOM操作,有的时候需要进行DOM操作,比如一些页面的动画效果
+
+自定义指令:
+app.directive(指令名称,function () {
+	return {
+		restrict: 限定指令的使用方式'ECMA,AE',
+		replace: true(作为元素使用的时候,隐藏指令的名字,最好写),
+		templateUrl: 模板的url地址,
+		template: 字符串,
+		scope: false, 
+		// 只要使用了指令,link函数自动就执行
+		link: function (scope,ele,attr) {
+			// 执行DOM操作
+		}
+	};
+});
+scope的值:
+false: 父子作用域完全一致
+true: 子作用域继承父作用域
+{}: 父子作用域完全不一样 (@绑定,=绑定,&绑定)
+
+
+什么时候才是处于angular的context环境?
+使用了angular的指令或者是服务
+
+强制触发angular的context环境: $apply(function (){})
+
+<input ng-model="m">{{m}}
+<input ng-model="v">{{v}}
+
+双向绑定的原理?
+使用了脏数据检查
+0.必须处于angular的context环境下
+1.生成了两个$watch,将$watch加入到$watch队列
+2.$digest遍历$watch队列
+
+消息机制?
+父子控制器的通信
+
+子控制器向父控制器传递数据?
+
+在父控制器:
+$scope.$on('名字',function (event,data) {
+	data: 是子控制器发送过来的数据
+});
+
+在子控制器里面:
+发射数据
+$scope.$emit('名字',你要发射的数据);
+
+自定义服务: 服务是单例对象
+自定义作用: 可以实现数据共享
+$provide
+
+var app = angular.module('app',[],function ($provide) {
+	$provide.factory(服务名称,function () {
+		var obj
+	});
+});
+
+使用模块自定义服务
+provider  factory  service  value constant(保存的值一般是不能修改的)
+
+路由:
+angular的路由
+1.引入angular-route.js
+2.angular.module('app',['ngRoute']);
+
+配置路由表:
+
+app.config(['$routeProvider',function ($routeProvider) {
+	$routeProvider.when(path,{
+		templateUrl:,
+		template: ,
+		controller:
+	}).when('/my/:page',{
+		templateUrl:,
+		template: ,
+		controller:
+	}).otherwise({redirectTo: path});
+}]);
+
+更新路由参数
+$route.updateParams({page: 值})
+路由参数:
+$routeParams
+
+结合ng-view显示视图
+
+
+ui-router
+
+1.引入ui-router
+2.angular.module('app',['ui.router']);
+
+配置路由表
+
+app.config(['$stateProvider','$urlRouterProvider',function ($stateProvider,$urlRouterProvider) {
+	
+	$stateProvider.state(状态名字,{
+		template:,
+		templateUrl,
+		controller:,
+		url: ,
+	}).state(状态名字,{
+		template:,
+		templateUrl,
+		controller:,
+		url: ,
+	});
+
+	$urlRouterProvider.otherwise(path)
+
+}]);
+
+更新路由参数:
+$state.go(状态名,{路由参数名: 参数值})
+
+路由参数:
+$stateParams:
+
+<a ui-sref="状态名"></a>
+ui-sref-active: 触发路由的时候显示的样式
+
+结合ui-view来显示视图的
+
+比较ngRoute 和 ui.router区别?
+			   服务
+ngRoute    $routeProvider.when(url,{template:,controller}).otherwise({redirectTo:})
+ui.router  $stateProvider.state(状态名,{url:,})  $urlRouterProvider.otherwise(path)
+
+		   $route.updateParams({参数的名字: 值})
+		   $state.go(状态名,{参数的名字: 值})
+
+		   $routeParams
+		   $stateParams
+
+		   href="#/path"
+
+		   ui-sref="名字"  ui-sref-active=""
+
+
+
+
+
+
+
+
+
+
+
+

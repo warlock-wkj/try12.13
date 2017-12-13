@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象深拷贝</title>
+	<script>
+	var person={name:'xiaoming',age:15}
+	//-----浅拷贝-----
+	//es5方法
+	function simpleClone(initalObj) {
+	    var obj = {};
+	    for ( var i in initalObj) {
+	        obj[i] = initalObj[i];
+	    }
+	    return obj;
+	}
+	console.log(simpleClone(person))//{name:'xiaoming',age:15}
+	//es6方法
+	simpleClone1=(obj)=>{
+		let obj1={};
+		Object.assign(obj1,obj)
+		return obj1;
+	}
+	console.log(simpleClone1(person))//{name:'xiaoming',age:15}
+
+
+
+	//-----深拷贝-----
+	// 使用 JSON.parse() 方法
+	function deepClone(initalObj) {
+	    var obj = {};
+	    try {
+	        obj = JSON.parse(JSON.stringify(initalObj));
+	    }
+	    catch (err) {
+         	return      
+        }
+	    return obj;
+	}
+	console.log(deepClone(person))//{name:'xiaoming',age:15}
+	/*
+	这种方法简单易用。
+
+	但是这种方法也有不少坏处，譬如它会抛弃对象的constructor。也就是深拷贝之后，不管这个对象原来的构造函数是什么，在深拷贝之后都会变成Object。
+
+	这种方法能正确处理的对象只有 Number, String, Boolean, Array, 扁平对象，即那些能够被 json 直接表示的数据结构。RegExp对象是无法通过这种方式深拷贝。
+
+	*/
+	//递归拷贝
+	function deepClone1(initalObj, finalObj) {
+	    var obj = finalObj || {};
+	    for (var i in initalObj) {
+	        var prop = initalObj[i];
+	  
+	        // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
+	        if(prop === obj) {
+	            continue;
+	        }
+	  
+	        if (typeof prop === 'object') {
+	            obj[i] = (prop.constructor === Array) ? [] : {};
+	            arguments.callee(prop, obj[i]);
+	        } else {
+	            obj[i] = prop;
+	        }
+	    }
+	    return obj;
+	}
+	console.log(deepClone1(person,{}))//{name:'xiaoming',age:15}
+
+	//使用Object.create()方法
+	//直接使用var newObj = Object.create(oldObj)，可以达到深拷贝的效果。
+	function deepClone2(initalObj, finalObj) {
+	    var obj = finalObj || {};
+	    for (var i in initalObj) {
+	        var prop = initalObj[i];
+	  
+	        // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
+	        if(prop === obj) {
+	            continue;
+	        }
+	  
+	        if (typeof prop === 'object') {
+	            obj[i] = (prop.constructor === Array) ? [] : Object.create(prop);
+	        } else {
+	            obj[i] = prop;
+	        }
+	    }
+	    return obj;
+	}
+	console.log(deepClone2(person,{}))//{name:'xiaoming',age:15}
+
+
+
+	//参考：jQuery.extend()方法的实现,jQuery.js的jQuery.extend()也实现了对象的深拷贝
+	jQuery.extend = jQuery.fn.extend = function() {
+	    var options, name, src, copy, copyIsArray, clone,
+	        target = arguments[ 0 ] || {},
+	        i = 1,
+	        length = arguments.length,
+	        deep = false;
+	  
+	    // Handle a deep copy situation
+	    if ( typeof target === "boolean" ) {
+	        deep = target;
+	  
+	        // Skip the boolean and the target
+	        target = arguments[ i ] || {};
+	        i++;
+	    }
+	  
+	    // Handle case when target is a string or something (possible in deep copy)
+	    if ( typeof target !== "object" && !jQuery.isFunction( target ) ) {
+	        target = {};
+	    }
+	  
+	    // Extend jQuery itself if only one argument is passed
+	    if ( i === length ) {
+	        target = this;
+	        i--;
+	    }
+	  
+	    for ( ; i < length; i++ ) {
+	  
+	        // Only deal with non-null/undefined values
+	        if ( ( options = arguments[ i ] ) != null ) {
+	  
+	            // Extend the base object
+	            for ( name in options ) {
+	                src = target[ name ];
+	                copy = options[ name ];
+	  
+	                // Prevent never-ending loop
+	                if ( target === copy ) {
+	                    continue;
+	                }
+	  
+	                // Recurse if we're merging plain objects or arrays
+	                if ( deep && copy && ( jQuery.isPlainObject( copy ) ||
+	                    ( copyIsArray = jQuery.isArray( copy ) ) ) ) {
+	  
+	                    if ( copyIsArray ) {
+	                        copyIsArray = false;
+	                        clone = src && jQuery.isArray( src ) ? src : [];
+	  
+	                    } else {
+	                        clone = src && jQuery.isPlainObject( src ) ? src : {};
+	                    }
+	  
+	                    // Never move original objects, clone them
+	                    target[ name ] = jQuery.extend( deep, clone, copy );
+	  
+	                // Don't bring in undefined values
+	                } else if ( copy !== undefined ) {
+	                    target[ name ] = copy;
+	                }
+	            }
+	        }
+	    }
+	  
+	    // Return the modified object
+	    return target;
+	};
+
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

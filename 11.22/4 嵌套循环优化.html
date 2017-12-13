@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	
+</body>
+</html>
+<script type="text/javascript">
+	// 优化前
+	var time1 = Date.now();
+	for (var i = 0;i < 1000;i++) {
+		for (var j = 0;j < 10;j++) {
+			var a = 110;
+			a++;
+		}
+	}
+	var time2 = Date.now();
+	console.log(time2 - time1);
+
+	// 优化后
+	var time1 = Date.now();
+	for (var i = 0;i < 10;i++) {
+		for (var j = 0;j < 1000;j++) {
+			var a = 110;
+			a++
+		}
+	}
+	var time2 = Date.now();
+	console.log(time2 - time1);
+</script>

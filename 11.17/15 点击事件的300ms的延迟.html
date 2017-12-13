@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style type="text/css">
+		div {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+		div:active {
+			background: #ccc;
+		}
+	</style>
+	<script type="text/javascript" src="fastclick.js"></script>
+</head>
+<body>
+	<div></div>
+	dsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+</body>
+</html>
+<script type="text/javascript">
+	
+	FastClick.attach(document.body);
+	var oDiv = document.getElementsByTagName('div')[0];
+	// touchstart touchend
+	oDiv.onclick = function () {
+		alert(2)
+	}
+</script>
